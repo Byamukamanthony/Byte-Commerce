@@ -1,0 +1,1303 @@
+# UGABYTE COMMERCE — COMPLETE BACKEND, AUTHENTICATION, DATABASE, STORAGE & INFRASTRUCTURE ASSEMBLY MASTER PROMPT
+
+## 1. YOUR ROLE
+
+Act as a principal backend architect, senior full-stack engineer, Supabase specialist, PostgreSQL database administrator, authentication engineer, cloud infrastructure engineer, API integration specialist and application security auditor.
+
+Your responsibility is to assemble, configure, connect, implement and verify every backend and infrastructure component required for UgaByte Commerce to function as a real production-quality ecommerce platform.
+
+You must not simply generate frontend screens or provide recommendations.
+
+You must work with the existing UgaByte codebase and available connected development resources to implement the actual infrastructure wherever access permits.
+
+Your work must cover:
+
+- Authentication.
+- User profiles and roles.
+- Database.
+- Database relationships.
+- Database migrations.
+- Row Level Security.
+- Supabase Storage.
+- Product image management.
+- Store image management.
+- Backend APIs.
+- Server-side business logic.
+- Cart persistence.
+- Checkout without in-app payments.
+- Order processing.
+- Inventory management.
+- Merchant authorization.
+- Admin authorization.
+- Notifications and communication.
+- AI integrations.
+- Environment variables.
+- Vercel configuration.
+- Error handling.
+- Logging.
+- Performance.
+- Backups and recovery planning.
+- Security.
+- Production readiness.
+
+The final result must be an interconnected, functional system rather than disconnected components.
+
+---
+
+# 2. PROJECT CONTEXT
+
+Product: UgaByte Commerce.
+
+Existing UgaByte application:
+https://ugabyte.vercel.app/
+
+Existing marketing website:
+https://ugabyte-website.vercel.app/
+
+Technology:
+- Existing UgaByte frontend architecture.
+- Supabase.
+- PostgreSQL.
+- Supabase Auth.
+- Supabase Storage.
+- Supabase Edge Functions where appropriate.
+- Vercel.
+- Gemini API for AI functionality where implemented.
+
+Business model:
+
+UgaByte Commerce supports:
+1. A shared marketplace.
+2. Independent merchant storefronts.
+3. Merchant business dashboards.
+4. Product management.
+5. Customer shopping.
+6. Order management.
+7. Inventory management.
+8. Store management.
+9. AI-assisted product content.
+
+Target market: Uganda.
+
+Default currency: UGX.
+
+Existing UgaByte features that must remain operational:
+- Deals.
+- Market.
+- Events.
+- Profile.
+
+CRITICAL:
+This is an expansion of the existing UgaByte ecosystem.
+
+Do not replace the existing application, destroy existing functionality or create duplicate authentication and profile systems.
+
+First inspect the existing application and connected infrastructure.
+
+---
+
+# 3. IMPORTANT PAYMENT DECISION — NO IN-APP PAYMENTS
+
+THIS REQUIREMENT IS MANDATORY.
+
+UgaByte Commerce must NOT have in-app payment processing at this stage.
+
+Do not implement:
+- MTN MoMo payment API.
+- Airtel Money payment API.
+- Card payment gateways.
+- Stripe.
+- PayPal.
+- Payment gateway checkout.
+- In-app wallet.
+- Stored monetary balances.
+- Automatic payment collection.
+- Automatic payment verification.
+- Payment settlement.
+- Payment processing webhooks.
+
+Do not create a checkout flow that requests customers to pay UgaByte or submit payment credentials.
+
+## How checkout must work
+
+Customers must be able to:
+
+1. Browse products.
+2. Add products to cart.
+3. Enter their name.
+4. Enter their phone number.
+5. Enter delivery details.
+6. Choose a delivery method.
+7. Add an optional note.
+8. Submit an order.
+9. Receive an order confirmation.
+10. Contact the merchant directly to arrange payment.
+
+Payment arrangements happen directly between the customer and merchant outside UgaByte.
+
+Possible payment arrangements may include:
+- Cash on delivery.
+- Cash on pickup.
+- Direct mobile money transfer to the merchant.
+- Another arrangement agreed between the customer and merchant.
+
+UgaByte does not collect or process those payments.
+
+## Remove payment processing from the application
+
+Inspect the existing codebase for:
+- Payment gateway components.
+- Payment API routes.
+- Payment provider SDKs.
+- Payment callbacks.
+- Payment webhooks.
+- Wallet functionality.
+- Payment-related checkout screens.
+- Fake payment buttons.
+- Simulated successful transactions.
+- Payment status manipulation.
+
+Remove or disable unused payment processing safely.
+
+Do not remove order functionality.
+
+Do not delete historical records without approval.
+
+If payment-related schema already exists, determine whether it is necessary for historical compatibility. Preserve existing records and prevent new in-app payment processing.
+
+The checkout interface must clearly communicate:
+
+"Submit your order and arrange payment directly with the seller."
+
+The merchant dashboard must show the order and customer contact details, not pretend that payment has been received.
+
+The system must never display a false payment-success message.
+
+For now, order status and payment arrangements are separate concepts.
+
+---
+
+# 4. INITIAL INFRASTRUCTURE DISCOVERY
+
+Before making modifications, perform a complete read-only inspection.
+
+Inspect:
+
+A. Application
+- Frontend framework.
+- Project structure.
+- Routing.
+- Existing authentication implementation.
+- Existing API routes.
+- Server-side functions.
+- Existing ecommerce components.
+- Existing UgaByte functionality.
+
+B. Supabase
+- Connected Supabase project.
+- Database schema.
+- Existing tables.
+- Views.
+- Functions.
+- Triggers.
+- Extensions.
+- Indexes.
+- Foreign keys.
+- RLS policies.
+- Storage buckets.
+- Storage policies.
+- Authentication settings.
+- Existing users and profiles.
+
+C. Vercel
+- Project configuration.
+- Deployment settings.
+- Environment variable names.
+- Build configuration.
+- Runtime configuration.
+- Existing server-side routes.
+- Domain configuration.
+
+D. External integrations
+- Gemini API.
+- Email services, if configured.
+- WhatsApp links or integrations.
+- Existing analytics.
+- Any other connected service.
+
+IMPORTANT:
+Never display actual secret values in reports or logs.
+
+Do not assume that a database or integration is correctly connected just because its credentials exist.
+
+Verify actual connectivity.
+
+## Produce an infrastructure inventory
+
+For every component, report:
+
+- Component name.
+- Current status.
+- Existing implementation.
+- Missing configuration.
+- Dependencies.
+- Identified problems.
+- Required actions.
+- Verification method.
+
+Use these statuses:
+
+PASS
+FAIL
+PARTIAL
+NOT CONFIGURED
+NOT IMPLEMENTED
+BLOCKED
+
+Do not mark an untested component as PASS.
+
+---
+
+# 5. SUPABASE AUTHENTICATION ASSEMBLY
+
+Make Supabase Auth the central identity provider for UgaByte Commerce.
+
+Reuse the existing UgaByte authentication system if it is already working.
+
+Do not create duplicate user accounts.
+
+## Authentication functionality
+
+Verify and implement:
+
+1. User registration.
+2. User login.
+3. User logout.
+4. Session persistence.
+5. Session refresh.
+6. Password reset.
+7. Password update.
+8. Authentication error handling.
+9. Protected routes.
+10. User account state.
+11. Authentication loading states.
+12. Expired-session handling.
+
+Implement appropriate email confirmation settings if supported by the existing authentication configuration.
+
+For phone-based authentication, only enable OTP if the required SMS provider is properly configured and tested. Do not pretend SMS authentication works if no provider exists.
+
+## User profiles
+
+Reuse the existing UgaByte profiles table if possible.
+
+Ensure every authenticated user has a corresponding profile where the application requires one.
+
+Suggested profile fields, adapted to the existing schema:
+
+- id
+- full_name
+- username
+- phone
+- avatar_url
+- account_status
+- created_at
+- updated_at
+
+The profile ID should correctly reference the Supabase Auth user ID.
+
+Implement reliable profile creation, including appropriate handling when account creation succeeds but profile creation fails.
+
+Avoid creating duplicate profiles.
+
+## User roles
+
+Implement a secure role system.
+
+Required roles:
+
+- customer
+- merchant
+- admin
+
+A user may be both a customer and a merchant.
+
+If a user can operate multiple stores, permissions must be based on store membership rather than assuming that one global merchant role grants access to every store.
+
+Never allow users to promote themselves to admin.
+
+Never trust a role value submitted by the frontend.
+
+Use secure database policies and trusted server-side authorization.
+
+## Authentication verification
+
+Test with separate accounts:
+
+- Anonymous visitor.
+- Customer.
+- Merchant A.
+- Merchant B.
+- Administrator.
+
+Verify that each can access only the functionality they are authorized to use.
+
+---
+
+# 6. DATABASE ASSEMBLY
+
+Create a complete, consistent Commerce database using the existing Supabase PostgreSQL project.
+
+First inspect existing tables.
+
+Reuse existing profiles and compatible shared tables.
+
+Do not duplicate or overwrite existing UgaByte records.
+
+## Required Commerce data structures
+
+Ensure the platform supports the following entities.
+
+### Stores
+
+Fields:
+- id
+- owner_id
+- name
+- slug
+- description
+- logo_url
+- cover_url
+- phone
+- whatsapp_number
+- email
+- location_text
+- district
+- status
+- created_at
+- updated_at
+
+### Store members
+
+Fields:
+- id
+- store_id
+- user_id
+- role
+- created_at
+
+### Categories
+
+Fields:
+- id
+- name
+- slug
+- parent_id
+- is_active
+- created_at
+
+### Products
+
+Fields:
+- id
+- store_id
+- category_id
+- name
+- slug
+- description
+- price
+- compare_at_price
+- stock_quantity
+- SKU
+- condition
+- status
+- created_at
+- updated_at
+
+### Product images
+
+Fields:
+- id
+- product_id
+- storage_path
+- alt_text
+- sort_order
+- created_at
+
+### Customer addresses
+
+Fields:
+- id
+- user_id
+- recipient_name
+- phone
+- district
+- area
+- address_details
+- created_at
+
+Allow guest checkout if supported by the product requirements. Do not require an authenticated account just to browse or place a basic order.
+
+### Orders
+
+Fields:
+- id
+- order_number
+- store_id
+- customer_id, nullable for guest orders
+- customer_name
+- customer_phone
+- customer_email
+- delivery_method
+- delivery_address
+- delivery_fee
+- subtotal
+- total
+- currency
+- status
+- customer_note
+- created_at
+- updated_at
+
+Currency must default to UGX.
+
+### Order items
+
+Fields:
+- id
+- order_id
+- product_id
+- product_name
+- sku
+- unit_price
+- quantity
+- line_total
+
+Historical product information must be preserved even if a merchant later edits or removes a product.
+
+### Order status history
+
+Fields:
+- id
+- order_id
+- old_status
+- new_status
+- changed_by
+- note
+- created_at
+
+### Favorites
+
+Support:
+- Saved products.
+- Saved stores.
+
+## Database requirements
+
+Implement:
+
+- UUID primary keys.
+- Correct foreign keys.
+- Unique constraints.
+- Appropriate nullability.
+- Numeric monetary columns.
+- Database indexes.
+- Updated-at triggers where useful.
+- Safe migrations.
+- Appropriate deletion behavior.
+- Search optimization.
+- Pagination support.
+
+Implement the appropriate relationships between all entities.
+
+Ensure that orders belong to one store in the initial MVP.
+
+A cart containing products from multiple stores must be separated into one order per store when the customer checks out.
+
+Do not introduce complex multi-store settlement functionality.
+
+## Migration safety
+
+All migrations must:
+
+- Be versioned.
+- Be repeatable where practical.
+- Avoid destructive operations.
+- Preserve existing data.
+- Include rollback guidance.
+- Be reviewed before production execution.
+
+Use a separate test environment for destructive testing.
+
+---
+
+# 7. DATABASE SECURITY — ROW LEVEL SECURITY
+
+Enable and verify Row Level Security on every table containing private or merchant-controlled information.
+
+Implement the following rules.
+
+PUBLIC VISITORS:
+- Can read active stores.
+- Can read published products from active stores.
+- Cannot read private merchant records.
+- Cannot read private customer information.
+- Cannot modify database records.
+
+CUSTOMERS:
+- Can view their own orders.
+- Can create valid orders.
+- Can manage their own addresses and favorites.
+- Cannot view other customers' private information.
+- Cannot change order prices.
+- Cannot alter stock.
+- Cannot change their own authorization role.
+
+MERCHANTS:
+- Can manage their own stores.
+- Can manage their own products.
+- Can view orders belonging to their stores.
+- Can update authorized order statuses.
+- Cannot access another merchant's private information.
+- Cannot promote themselves to admin.
+
+ADMIN:
+- Can perform authorized moderation.
+- Can suspend stores.
+- Can moderate products.
+- Can inspect platform orders.
+
+Test RLS using actual authenticated users and database/API requests.
+
+Do not rely on frontend route protection alone.
+
+Do not expose the Supabase service-role key.
+
+Do not expose database credentials.
+
+---
+
+# 8. SUPABASE STORAGE ASSEMBLY
+
+Configure and verify these storage buckets:
+
+1. store-logos
+2. store-covers
+3. product-images
+4. avatars, if the existing platform uses them
+
+Inspect existing buckets before creating new ones.
+
+## Upload functionality
+
+Implement:
+- Store logo uploads.
+- Store cover uploads.
+- Product image uploads.
+- Multiple images per product.
+- Image replacement.
+- Image deletion.
+- Image preview.
+- Loading indicators.
+- Upload progress where supported.
+- Upload error handling.
+
+## Security
+
+Implement appropriate storage policies.
+
+Verify:
+
+- A merchant can upload images only to authorized store locations.
+- A merchant cannot replace another merchant's images.
+- Customers cannot upload into protected merchant storage paths.
+- Unauthorized users cannot delete files.
+- Public images are readable where intended.
+- Private images remain private.
+- File types are validated.
+- File sizes are restricted.
+- Image paths are correctly saved in the database.
+
+Use image optimization and appropriate formats where practical.
+
+Do not store large base64 images directly in PostgreSQL.
+
+Use Storage paths and signed URLs when appropriate.
+
+---
+
+# 9. BACKEND API ASSEMBLY
+
+Inspect existing backend architecture and implement the necessary secure endpoints or server-side functions.
+
+Required functionality:
+
+AUTHENTICATION:
+- Profile retrieval.
+- Profile updates.
+- Account status checks.
+
+STORES:
+- Create store.
+- Update store.
+- Retrieve public store.
+- Retrieve merchant stores.
+- Check slug availability.
+- Approve or suspend stores through authorized admin functionality.
+
+PRODUCTS:
+- Create product.
+- Update product.
+- Delete or archive product.
+- Retrieve public products.
+- Retrieve merchant products.
+- Search products.
+- Filter products.
+- Update inventory.
+
+ORDERS:
+- Create order.
+- Retrieve customer orders.
+- Retrieve merchant orders.
+- Retrieve order details.
+- Update order status.
+- Retrieve order history.
+
+CART:
+- Add item.
+- Remove item.
+- Update quantity.
+- Persist cart where appropriate.
+
+FAVORITES:
+- Save product.
+- Remove product.
+- Save store.
+- Remove store.
+
+ADMIN:
+- Retrieve platform overview.
+- Moderate stores.
+- Moderate products.
+- Review orders.
+
+Use the existing frontend architecture and API conventions.
+
+Validate all input server-side.
+
+Return predictable error responses.
+
+Do not expose private records through public endpoints.
+
+Do not create unnecessary duplicate APIs for functionality that can be safely implemented through existing secure Supabase patterns.
+
+---
+
+# 10. CHECKOUT AND ORDER PROCESSING — WITHOUT PAYMENTS
+
+Implement a complete order-processing system without in-app payments.
+
+The customer must not need to pay UgaByte to place an order.
+
+## Checkout journey
+
+1. Customer browses products.
+2. Customer adds products to cart.
+3. Customer opens checkout.
+4. Customer enters full name.
+5. Customer enters phone number.
+6. Customer enters optional email.
+7. Customer selects pickup or delivery.
+8. Customer enters delivery information if needed.
+9. Customer adds an optional note.
+10. Customer reviews order details.
+11. Customer submits order.
+12. System validates the order server-side.
+13. System checks product availability.
+14. System recalculates prices.
+15. System creates the order and item records atomically.
+16. System updates stock safely.
+17. System returns a unique order reference.
+18. Customer sees an order confirmation.
+19. Merchant receives the order in their dashboard.
+20. Customer and merchant communicate directly about payment and fulfilment.
+
+## Important checkout rules
+
+- No in-app payment gateway.
+- No payment credentials.
+- No card collection.
+- No wallet.
+- No fake payment confirmation.
+- No automated mobile money collection.
+- No claim that UgaByte has received customer money.
+
+Display:
+
+"Your order has been submitted. The seller will contact you to confirm fulfilment and payment arrangements."
+
+The order status and payment arrangements must not be confused.
+
+## Order statuses
+
+Implement:
+
+- pending
+- accepted
+- processing
+- ready
+- dispatched
+- completed
+- cancelled
+- rejected
+
+Enforce valid status transitions.
+
+## Inventory
+
+Implement safe inventory handling.
+
+- Do not permit negative stock.
+- Recheck stock during order creation.
+- Prevent overselling during simultaneous orders.
+- Use database transactions or atomic database functions.
+- Define and implement a consistent stock-restoration policy for cancelled or rejected orders.
+- Preserve order item snapshots.
+
+## Guest checkout
+
+Support guest checkout where possible.
+
+Guest customers must be able to submit orders using their name and phone number without creating an account.
+
+Implement secure order references and appropriate protections against unauthorized order lookup.
+
+Do not expose private customer data through predictable order IDs.
+
+---
+
+# 11. CART SYSTEM
+
+Implement a reliable cart.
+
+Requirements:
+
+- Add products.
+- Remove products.
+- Update quantities.
+- Show product images.
+- Show prices in UGX.
+- Calculate subtotal.
+- Display availability.
+- Handle out-of-stock items.
+- Handle deleted or unpublished products.
+- Handle price changes before checkout.
+- Persist carts appropriately.
+
+For unauthenticated users, use an appropriate client-side persistence approach.
+
+For authenticated users, support persistent cart storage if the existing architecture allows it.
+
+Do not trust client-side totals.
+
+Revalidate every item at checkout.
+
+For multi-store carts, group items by store and create separate orders for each store.
+
+---
+
+# 12. MERCHANT DASHBOARD BACKEND
+
+Ensure the dashboard is connected to real database records.
+
+Implement:
+
+OVERVIEW:
+- Actual orders.
+- Actual sales/order totals.
+- Active product counts.
+- Low-stock counts.
+- Recent order activity.
+
+STORE:
+- Real store information.
+- Store editing.
+- Store status.
+- Branding.
+
+PRODUCTS:
+- Actual CRUD operations.
+- Real stock updates.
+- Real image uploads.
+- Publish and archive actions.
+
+ORDERS:
+- Real order retrieval.
+- Real order status updates.
+- Real customer contact details where authorized.
+- Real order history.
+
+CUSTOMERS:
+- Customers associated with the merchant's own orders only.
+
+ANALYTICS:
+- Calculate figures from actual database records.
+- Do not invent sales or customer numbers.
+- Display useful empty states for new stores.
+
+---
+
+# 13. ADMIN BACKEND
+
+Build or verify a protected platform administration area.
+
+Admin functionality:
+
+- View stores.
+- Approve stores.
+- Reject stores.
+- Suspend stores.
+- View products.
+- Moderate listings.
+- Manage categories.
+- View orders.
+- View platform activity.
+- Inspect reports.
+
+Every admin action must be authorized server-side.
+
+Record important administrative actions in an audit log where practical.
+
+Never grant admin privileges through an untrusted frontend request.
+
+---
+
+# 14. NOTIFICATIONS AND COMMUNICATION
+
+Implement a reliable initial communication system.
+
+Priority:
+
+1. In-app order notifications for merchants.
+2. Customer order confirmation page.
+3. WhatsApp contact links.
+4. Optional email notifications if an actual email service is configured.
+
+WhatsApp:
+
+- Use merchant WhatsApp numbers.
+- Generate appropriate contact links.
+- Include order references where useful.
+- Do not pretend a WhatsApp message was sent automatically if the customer must click the link.
+
+Email:
+
+- Only enable automatic emails if an email provider is actually configured.
+- Protect provider API keys.
+- Handle delivery failures.
+- Do not block order creation merely because an optional email notification fails.
+
+Do not claim that SMS or push notifications work unless they are genuinely configured and tested.
+
+---
+
+# 15. GEMINI AI INTEGRATION
+
+If AI features are enabled, configure Gemini securely.
+
+Features:
+- Product description generation.
+- Product title suggestions.
+- Marketing captions.
+- WhatsApp promotional text.
+- Product category suggestions.
+
+Requirements:
+
+- Server-side API requests.
+- Secret key protection.
+- Error handling.
+- Input validation.
+- Usage limits where appropriate.
+- Output editing before publication.
+- No automatic alteration of product prices or stock.
+
+AI features must not prevent the core ecommerce workflow from functioning if the Gemini service becomes unavailable.
+
+---
+
+# 16. ENVIRONMENT VARIABLES AND VERCEL
+
+Inspect all environment variable references.
+
+Identify required variables by name, not secret value.
+
+Examples may include:
+
+Frontend:
+- Existing Supabase project URL.
+- Supabase publishable/anon key, according to the project's existing client configuration.
+
+Server:
+- Supabase service-role secret, if server-side privileged operations require it.
+- Gemini API key, if AI functionality is enabled.
+- Email provider key, only if email is enabled.
+
+Do not assume these names match the existing codebase. Inspect the actual configuration.
+
+Requirements:
+
+- Browser-safe keys must be clearly separated from server secrets.
+- Server secrets must never be bundled into client code.
+- Vercel environments must be configured appropriately.
+- Local development and production configuration must be distinguished.
+- Missing variables must produce clear errors.
+- No secrets should appear in logs or source control.
+
+Verify:
+- Development build.
+- Production build.
+- Vercel deployment.
+- Server-side routes.
+- Supabase connectivity.
+- Production environment configuration.
+
+Do not claim deployment success without checking the actual deployment result.
+
+---
+
+# 17. DATA INTEGRITY AND BACKUP STRATEGY
+
+Inspect the existing Supabase backup and recovery arrangements.
+
+Prepare a data protection plan covering:
+
+- Database backups.
+- Migration history.
+- Recovery procedures.
+- Storage asset protection.
+- Accidental deletion prevention.
+- Administrative audit records.
+
+Do not assume backups are enabled.
+
+Verify available backup capabilities and limitations for the actual Supabase plan.
+
+Never run destructive schema changes against production without an approved backup and migration plan.
+
+---
+
+# 18. LOGGING AND MONITORING
+
+Implement appropriate logging for:
+
+- Failed authentication attempts.
+- Failed API requests.
+- Failed order creation.
+- Inventory errors.
+- Storage upload failures.
+- Unauthorized access attempts.
+- Server exceptions.
+
+Do not log:
+- Passwords.
+- Access tokens.
+- Service-role keys.
+- Sensitive customer information unnecessarily.
+- Payment credentials.
+
+Add useful operational error reporting.
+
+Ensure errors can be investigated without exposing confidential information.
+
+---
+
+# 19. PERFORMANCE AND SCALABILITY
+
+Optimize the platform for Ugandan users and mobile connections.
+
+Implement:
+
+- Database indexes.
+- Paginated product listings.
+- Efficient search.
+- Optimized images.
+- Lazy loading.
+- Minimal unnecessary realtime subscriptions.
+- Efficient database queries.
+- Responsive frontend rendering.
+- Appropriate public data caching.
+- Safe private-data handling.
+
+Avoid unnecessary database calls.
+
+Do not load all products or orders at once.
+
+Do not cache private customer or merchant information publicly.
+
+---
+
+# 20. COMPLETE END-TO-END INFRASTRUCTURE TESTING
+
+After implementation, test the complete system.
+
+Use isolated test accounts and test data.
+
+TEST 1 — AUTH:
+- Register customer.
+- Register merchant.
+- Sign in.
+- Sign out.
+- Refresh session.
+- Reset password.
+- Verify role permissions.
+
+TEST 2 — DATABASE:
+- Create store.
+- Create product.
+- Update product.
+- Delete/archive product.
+- Create order.
+- Create order items.
+- Update order status.
+- Verify relationships.
+- Verify database constraints.
+
+TEST 3 — STORAGE:
+- Upload logo.
+- Upload cover.
+- Upload product image.
+- Replace image.
+- Delete authorized image.
+- Attempt unauthorized upload.
+- Attempt unauthorized deletion.
+
+TEST 4 — MARKETPLACE:
+- Browse stores.
+- Browse products.
+- Search.
+- Filter.
+- View product.
+- View store.
+- Confirm private data remains private.
+
+TEST 5 — CART:
+- Add products.
+- Update quantity.
+- Remove products.
+- Refresh.
+- Verify cart persistence.
+- Test multiple stores.
+
+TEST 6 — CHECKOUT:
+- Submit a valid order.
+- Test invalid information.
+- Test out-of-stock product.
+- Test modified browser prices.
+- Test duplicate submission.
+- Test concurrent stock purchases.
+- Verify order and order item records.
+- Verify stock updates.
+- Verify the correct merchant receives the order.
+
+TEST 7 — MERCHANT:
+- View own store.
+- Edit store.
+- Manage products.
+- View own orders.
+- Update order status.
+- View authorized customer information.
+- Attempt to access another merchant's records.
+
+TEST 8 — ADMIN:
+- Approve store.
+- Suspend store.
+- Moderate product.
+- View platform orders.
+- Attempt unauthorized admin access.
+
+TEST 9 — REGRESSION:
+- Deals.
+- Market.
+- Events.
+- Profile.
+- Existing authentication.
+- Main navigation.
+
+TEST 10 — PAYMENT RESTRICTION:
+- Confirm there are no active in-app payment gateways.
+- Confirm no customer can pay UgaByte inside the app.
+- Confirm no fake payment success screens exist.
+- Confirm no automated payment webhooks are active.
+- Confirm orders work without a payment gateway.
+- Confirm customers are instructed to arrange payment directly with merchants.
+
+---
+
+# 21. IMPLEMENTATION RULES
+
+Work in controlled stages.
+
+STAGE 1: Audit existing architecture and infrastructure.
+
+STAGE 2: Prepare safe database migrations.
+
+STAGE 3: Configure and verify authentication.
+
+STAGE 4: Configure and verify database security.
+
+STAGE 5: Configure and verify storage.
+
+STAGE 6: Implement backend APIs and business logic.
+
+STAGE 7: Implement cart and order processing without in-app payments.
+
+STAGE 8: Connect merchant and admin dashboards.
+
+STAGE 9: Configure environment variables and deployment.
+
+STAGE 10: Run complete end-to-end tests.
+
+STAGE 11: Fix failures and rerun tests.
+
+Do not skip stages.
+
+Do not mark infrastructure complete just because configuration files exist.
+
+Do not create fake integrations.
+
+Do not weaken security to make a test pass.
+
+Do not overwrite existing production data.
+
+If access to a connected service is missing, state exactly what access or configuration is required.
+
+If a task requires my explicit approval, stop before performing the action.
+
+---
+
+# 22. FINAL ACCEPTANCE CHECKLIST
+
+The infrastructure must not be declared complete until the following are verified:
+
+AUTHENTICATION:
+[ ] Existing authentication reused.
+[ ] Registration works.
+[ ] Login works.
+[ ] Logout works.
+[ ] Session persistence works.
+[ ] Password recovery works where configured.
+[ ] Roles are secure.
+[ ] Admin privileges are protected.
+
+DATABASE:
+[ ] Commerce tables exist.
+[ ] Relationships work.
+[ ] Constraints work.
+[ ] Indexes exist.
+[ ] Migrations are documented.
+[ ] Existing UgaByte data is preserved.
+[ ] RLS is enabled.
+[ ] Authorization tests pass.
+
+STORAGE:
+[ ] Store logos upload.
+[ ] Store covers upload.
+[ ] Product images upload.
+[ ] Upload permissions work.
+[ ] Unauthorized access is blocked.
+[ ] Image references persist correctly.
+
+BACKEND:
+[ ] APIs work.
+[ ] Server-side validation works.
+[ ] Store operations work.
+[ ] Product operations work.
+[ ] Cart operations work.
+[ ] Order creation works.
+[ ] Inventory handling works.
+[ ] Order updates work.
+[ ] Admin operations work.
+
+CHECKOUT:
+[ ] Guest checkout works where enabled.
+[ ] Orders can be placed without in-app payments.
+[ ] Prices are recalculated server-side.
+[ ] Stock is protected.
+[ ] Duplicate orders are prevented.
+[ ] Order confirmation works.
+[ ] Merchants receive orders.
+
+PAYMENTS:
+[ ] No in-app payment processing.
+[ ] No active payment gateways.
+[ ] No wallet.
+[ ] No fake payment success.
+[ ] Direct merchant payment arrangements are clearly explained.
+
+DEPLOYMENT:
+[ ] Environment variables are verified.
+[ ] Secrets are protected.
+[ ] Build succeeds.
+[ ] Deployment succeeds.
+[ ] Production connectivity works.
+[ ] Critical production smoke tests pass.
+
+REGRESSION:
+[ ] Existing Deals work.
+[ ] Existing Market works.
+[ ] Existing Events work.
+[ ] Existing Profile works.
+
+---
+
+# 23. FINAL REPORT
+
+At the end, provide:
+
+1. Infrastructure architecture actually implemented.
+2. Supabase configuration status.
+3. Authentication status.
+4. Database tables and relationships created or reused.
+5. RLS policies implemented and tested.
+6. Storage buckets and policies.
+7. Backend APIs implemented.
+8. Cart and order processing status.
+9. Confirmation that no in-app payments are active.
+10. Vercel environment and deployment status.
+11. Security findings.
+12. Testing evidence.
+13. Files created or modified.
+14. Migrations created.
+15. Outstanding issues.
+16. Required manual actions.
+17. Production readiness decision.
+
+Use exactly one final status:
+
+READY FOR CONTROLLED BETA
+READY FOR PRODUCTION
+NOT READY — CRITICAL ISSUES
+BLOCKED — ACCESS OR CONFIGURATION REQUIRED
+
+Every PASS must have evidence from an actual test.
+
+Do not fabricate test results.
+
+Do not claim that external integrations are configured when they are not.
+
+Do not claim that backups, authentication, database policies or deployment work without verification.
+
+## FINAL DIRECTIVE
+
+Assemble the entire UgaByte Commerce infrastructure into one properly connected, secure and functioning system.
+
+The frontend, authentication, database, storage, backend APIs, inventory and order management must work together.
+
+There must be no in-app payment processing at this stage.
+
+Preserve the existing UgaByte ecosystem.
+
+Prioritize reliability, security, data integrity and real functionality.
+
+BEGIN WITH A READ-ONLY INFRASTRUCTURE AUDIT. THEN IMPLEMENT THE REQUIRED COMPONENTS IN STAGES, TEST THEM, REPAIR FAILURES AND REPORT THE VERIFIED RESULTS.

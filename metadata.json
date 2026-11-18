@@ -1,0 +1,6 @@
+{
+  "name": "UgaByte Commerce",
+  "description": "Multi-vendor Ugandan ecommerce ecosystem uniting shared marketplace discovery, independent merchant storefronts, UGX checkout, and AI-powered business tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
